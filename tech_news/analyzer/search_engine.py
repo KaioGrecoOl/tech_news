@@ -1,4 +1,5 @@
 from tech_news.database import search_news
+import datetime
 
 
 # Requisito 6
@@ -16,7 +17,12 @@ def search_by_title(title):
 
 # Requisito 7
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    try:
+        time_stamp = datetime.date.fromisoformat(date).strftime("%d/%m/%Y")
+        data_info = search_news({"timestamp": {"$regex": time_stamp}})
+    except ValueError:
+        raise ValueError("Data inválida")
+    return [(item["title"], item["url"]) for item in data_info]
 
 
 # Requisito 8
@@ -27,3 +33,7 @@ def search_by_tag(tag):
 # Requisito 9
 def search_by_category(category):
     """Seu código deve vir aqui"""
+
+
+# if __name__ == "__main__":
+#     print(search_by_title("BACANA"))
