@@ -27,13 +27,17 @@ def search_by_date(date):
 
 # Requisito 8
 def search_by_tag(tag):
-    """Seu código deve vir aqui"""
+    search_info_tag = search_news(
+        {"tags": {"$elemMatch": {"$regex": f"{tag}", "$options": "i"}}}
+    )
+    response = []
+    for data in search_info_tag:
+        response.append(
+            (data["title"], data["url"]),
+        )
+    return response
 
 
 # Requisito 9
 def search_by_category(category):
     """Seu código deve vir aqui"""
-
-
-# if __name__ == "__main__":
-#     print(search_by_title("BACANA"))
